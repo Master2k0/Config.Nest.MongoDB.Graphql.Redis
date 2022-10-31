@@ -8,6 +8,8 @@ import { RedisClientOptions} from '@redis/client'
 
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheConfigService } from './configs/cache.config';
+import { ThrottlerModule, ThrottlerAsyncOptions } from '@nestjs/throttler';
+import { ThrottlerConfigService } from './configs/throttler.config';
 
 @Module({
   imports: [
@@ -25,8 +27,10 @@ import { CacheConfigService } from './configs/cache.config';
     isGlobal: true,
     useClass: CacheConfigService,
     // useFactory: async ( )
+  }),
+  ThrottlerModule.forRootAsync({
+    useClass: ThrottlerConfigService,
   })
-
 ],
   // controllers: [AppController],
   // providers: [AppService],
