@@ -4,10 +4,9 @@ import {
     Injectable,
   } from '@nestjs/common';
 import { RedisClientOptions } from '@redis/client';
-  import { CachingConfig } from 'cache-manager';
-  import * as redisStore from 'cache-manager-redis-store';
-//   import { RandomCodeEnum } from '../constants/enum';
-//   import { randomCode } from '../utils/string.utils';
+import { CachingConfig, TtlFunction} from 'cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
+import { randomCode, RandomCodeEnum } from 'src/utils/string.utils';
   @Injectable()
   export class CacheConfigService implements CacheOptionsFactory {
     createCacheOptions(): CacheModuleOptions<RedisClientOptions> {
@@ -21,12 +20,12 @@ import { RedisClientOptions } from '@redis/client';
       };
   }
 }
-//   export function customTTL(ttl?: number): CachingConfig {
-//     if (!ttl) {
-//       ttl = 1;
-//     }
-//     return {
-//       ttl: +randomCode(3, RandomCodeEnum.NUMBER) + ttl,
-//     };
-//   }
+  export function customTTL(ttl?: number): CachingConfig {
+    if (!ttl) {
+      ttl = 1;
+    }
+    return {
+      ttl: +randomCode(3, RandomCodeEnum.NUMBER) + ttl,
+    };
+  }
   
